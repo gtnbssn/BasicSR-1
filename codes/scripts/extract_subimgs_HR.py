@@ -10,9 +10,9 @@ from utils.progress_bar import ProgressBar
 
 def main():
     """A multi-thread tool to crop sub imags."""
-    input_folder = '/root/BasicSR/datasets/ESRGAN_training_set/hr_6000x4000'
-    save_folder = '/root/BasicSR/datasets/ESRGAN_training_set/hr_6000x4000_sub'
-    n_thread = 20
+    input_folder = '/root/BasicSR/datasets/ESRGAN_training_set/ESRGAN_val/hr_6000x4000'
+    save_folder = '/root/BasicSR/datasets/ESRGAN_training_set/ESRGAN_val/hr_6000x4000_sub'
+    n_thread = 64
     crop_sz = 960
     step = 480
     thres_sz = 96

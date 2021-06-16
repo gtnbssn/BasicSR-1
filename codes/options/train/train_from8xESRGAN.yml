@@ -1,11 +1,11 @@
-name: 001_dotsm_x8 # use "debug" or "debug_nochkp" in the name to run a test session and check everything is working. Does validation and state saving every 8 iterations.
+name: 002_dotsm_x8_from8xESRGAN # use "debug" or "debug_nochkp" in the name to run a test session and check everything is working. Does validation and state saving every 8 iterations.
 #name: 001_template # remove "debug" to run the real training session.
 use_tb_logger: true
 model: srragan #srragan | sr | srgan | ppon | asrragan
 scale: 8
 gpu_ids: [0,1,2,3]
 use_amp: true
-use_swa: false
+use_swa: true
 
 # Dataset options:
 datasets:
@@ -21,7 +21,7 @@ datasets:
     batch_size: 32
     virtual_batch_size: 32
     preprocess: crop # how to process the images after loading
-    HR_size: 512 # patch size. Default: 128. Needs to be coordinated with the patch size of the features network
+    HR_size: 128 # patch size. Default: 128. Needs to be coordinated with the patch size of the features network
     image_channels: 3 # number of channels to load images in
 
     # Color space conversion: 'color' for both LR and HR, 'color_LR' for LR independently, 'color_HR' for HR independently
@@ -93,12 +93,12 @@ datasets:
 path:
     strict: false # true | false 
     root: '/root/BasicSR'
-    pretrain_model_G: '/root/BasicSR/experiments/pretrained_models/8xPSNR.pth'
+    pretrain_model_G: '/root/BasicSR/experiments/pretrained_models/8xESRGAN.pth'
     #pretrain_model_G: '../experiments/pretrained_models/RRDB_ESRGAN_x4.pth'
     #pretrain_model_G: '../experiments/pretrained_models/nESRGANplus.pth'
     #pretrain_model_G: '../experiments/pretrained_models/PPON_G.pth'
     # pretrain_model_G: '../experiments/pretrained_models/PANx4_DF2K.pth'
-    #resume_state: '../experiments/debug_002_RRDB_ESRGAN_x4_DIV2K/training_state/16.state'
+    #resume_state: '/root/BasicSR/experiments/001_dotsm_x8_from8xESRGAN/training_state/20000.state'
 
 # Generator options:
 network_G:
@@ -181,10 +181,10 @@ network_D:
 
 # Schedulers options:
 train:
-    lr_G: 0.0002 # 2e-4 # starting lr_g #Test, default: 1e-4
+    lr_G: 0.0001 # 2e-4 # starting lr_g #Test, default: 1e-4
     weight_decay_G: 0
     beta1_G: 0.9
-    lr_D: 0.0002 # 2e-4 # starting lr_d #Test, default: 1e-4
+    lr_D: 0.0001 # 2e-4 # starting lr_d #Test, default: 1e-4
     weight_decay_D: 0
     beta1_D: 0.9
 
@@ -230,7 +230,7 @@ train:
     # niter: 1000000
 
     # For SWA scheduler
-    swa_start_iter: 375000 #Just reference: 75% of 500000. Can be any value, including 0 to start right away with a pretrained model.
+    swa_start_iter: 0 #Just reference: 75% of 500000. Can be any value, including 0 to start right away with a pretrained model.
     # swa_start_iter_rel: 0.75 # to use swa_start_iter relative to % of training niter instead of fixed swa_start_iter
     swa_lr: 1e-4 #Has to be ~order of magnitude of a stable lr for the regular scheduler
     swa_anneal_epochs: 10
@@ -327,5 +327,5 @@ train:
 
 logger:
     print_freq: 200
-    save_checkpoint_freq: 5e3
+    save_checkpoint_freq: 2e3
     overwrite_chkp: false

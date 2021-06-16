@@ -10,12 +10,12 @@ from utils.progress_bar import ProgressBar
 
 def main():
     """A multi-thread tool to crop sub imags."""
-    input_folder = '/root/BasicSR/datasets/ESRGAN_training_set/lrx16_375x250'
+    input_folder = '/root/datasets/ESRGAN_training_set/lrx16_375x250'
     save_folder = '/root/BasicSR/datasets/ESRGAN_training_set/lrx16_375x250_sub'
-    n_thread = 20
+    n_thread = 64
     crop_sz = 60
     step = 30
-    thres_sz = 10
+    thres_sz = 6
     compression_level = 0  # 3 is the default value in cv2
     # CV_IMWRITE_PNG_COMPRESSION from 0 to 9. A higher value means a smaller size and longer
     # compression time. If read raw images during training, use 0 for faster IO speed.
